@@ -112,6 +112,14 @@ redactor.detect("some text", threshold=0.3)
 
 Supported languages: English, Spanish, French, German, Italian, Dutch.
 
+## Important: Test Data vs Real Data
+
+The Piiranha model is context-aware — it can distinguish between real PII and obvious test/placeholder data. For example, `john.doe@example.com` or `123 Main Street` may score lower or not be flagged at all, because the model recognizes them as synthetic. This means:
+
+- **Don't use fake data to evaluate detection accuracy.** Use realistic (but consented) data for testing.
+- **In production, this is a feature.** The model won't over-redact boilerplate or template text, reducing false positives.
+- **Lower your threshold** (`threshold=0.1`) if you want to catch everything regardless of context.
+
 ## License
 
 MIT
