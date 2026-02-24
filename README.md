@@ -122,4 +122,6 @@ The Piiranha model is context-aware — it can distinguish between real PII and 
 
 ## License
 
-MIT
+The code in this repository is MIT licensed.
+
+The underlying model ([Piiranha v1](https://huggingface.co/iiiorg/piiranha-v1-detect-personal-information)) is licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). This means the model weights **may not be used for commercial purposes**. By using this library you agree to the model's license terms.

@@ -7,7 +7,7 @@ name = "piiranha-redactor"
 version = "0.1.0"
 description = "A local PII detection and redaction library powered by Piiranha v1 (DeBERTa-v3)"
 readme = "README.md"
-license = { text = "MIT" }
+license = { text = "MIT (code); CC BY-NC-ND 4.0 (model weights)" }
 requires-python = ">=3.10"
 authors = [
     { name = "Aaron Aco" }
