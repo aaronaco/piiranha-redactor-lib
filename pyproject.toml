@@ -45,3 +45,8 @@ packages = ["src/piiranha_redactor"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[dependency-groups]
+dev = [
+    "streamlit>=1.54.0",
+]
