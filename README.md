@@ -6,6 +6,8 @@ A local PII detection and redaction library powered by [Piiranha v1](https://hug
 
 Detects 17 types of PII across 6 languages with 98.27% recall.
 
+**[Try the live demo](https://huggingface.co/spaces/aaronaco/piiranha-redactor-lib-demo)**
+
 ## Installation
 
 ```bash
