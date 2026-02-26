@@ -39,7 +39,7 @@ SAMPLE_TEXTS = {
 }
 
 
-@st.cache_resource
+@st.cache_resource(show_spinner="Loading model (this may take a moment on first run)...")
 def load_redactor():
     return PIIRedactor()
 
