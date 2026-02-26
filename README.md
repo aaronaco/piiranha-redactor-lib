@@ -9,7 +9,7 @@ Detects 17 types of PII across 6 languages with 98.27% recall.
 ## Installation
 
 ```bash
-pip install piiranha-redactor
+pip install git+https://github.com/aaronaco/piiranha-redactor-lib.git
 ```
 
 > **Note:** PyTorch is required but not installed automatically because the right version depends on your hardware (CPU vs CUDA). Install it first:
