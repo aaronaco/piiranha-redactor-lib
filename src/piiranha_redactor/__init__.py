@@ -11,11 +11,12 @@ piiranha-redactor: Local PII detection and redaction powered by Piiranha v1 (DeB
 from __future__ import annotations
 
 import logging
+import sys
 
 from tabulate import tabulate
 
 from piiranha_redactor.detector import DetectedEntity, detect, redact
-from piiranha_redactor.model import load_model, resolve_device
+from piiranha_redactor.model import is_model_cached_for_device, load_model, resolve_device
 
 __all__ = ["PIIRedactor", "DetectedEntity"]
 __version__ = "0.1.0"
@@ -43,16 +44,30 @@ class PIIRedactor:
     Args:
         device: "cuda", "cpu", or None (auto-detect).
         threshold: Minimum confidence score (0.0-1.0). Default 0.5.
+        show_loading_indicator: Print a stderr notice when model load/download starts.
     """
 
     def __init__(
         self,
         device: str | None = None,
         threshold: float = 0.5,
+        show_loading_indicator: bool = True,
     ) -> None:
         self._device = resolve_device(device)
         self._default_threshold = threshold
+        is_cached = is_model_cached_for_device(self._device)
+
+        if show_loading_indicator and not is_cached:
+            print(
+                "Loading Piiranha model (first run may download ~1.1GB and take a while)...",
+                file=sys.stderr,
+                flush=True,
+            )
+
         self._tokenizer, self._model = load_model(self._device)
+
+        if show_loading_indicator and not is_cached:
+            print("Piiranha model ready.", file=sys.stderr, flush=True)
 
     def detect(
         self,

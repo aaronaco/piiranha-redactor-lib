@@ -10,11 +10,16 @@ _model: AutoModelForTokenClassification | None = None
 _loaded_device: str | None = None
 
 
+def is_model_cached_for_device(device: str) -> bool:
+    """Return True if model/tokenizer are already loaded for the given device."""
+    return _tokenizer is not None and _model is not None and _loaded_device == device
+
+
 def load_model(device: str) -> tuple[AutoTokenizer, AutoModelForTokenClassification]:
     """Load and cache the tokenizer and model. Downloads on first call (~1.1 GB)."""
     global _tokenizer, _model, _loaded_device
 
-    if _tokenizer is not None and _model is not None and _loaded_device == device:
+    if is_model_cached_for_device(device):
         return _tokenizer, _model
 
     if _loaded_device is not None and _loaded_device != device:
