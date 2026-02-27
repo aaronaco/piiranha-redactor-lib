@@ -8,6 +8,10 @@ Detects 17 types of PII across 6 languages with 98.27% recall.
 
 **[Try the live demo](https://huggingface.co/spaces/aaronaco/piiranha-redactor-lib-demo)**
 
+## Screenshots
+<img width="1150" height="544" alt="Screenshot 2026-02-27 213106" src="https://github.com/user-attachments/assets/350e5bb6-a89f-4c11-8a46-31b0d0047c2c" />
+<img width="1901" height="1470" alt="2026-02-27 21 35 21 huggingface co 1f831e087b93" src="https://github.com/user-attachments/assets/db22535b-7c5f-4067-bbad-1d7333f9a6d3" />
+
 ## Installation
 
 ```bash
