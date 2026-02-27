@@ -10,11 +10,29 @@ piiranha-redactor: Local PII detection and redaction powered by Piiranha v1 (DeB
 
 from __future__ import annotations
 
+import logging
+
+from tabulate import tabulate
+
 from piiranha_redactor.detector import DetectedEntity, detect, redact
 from piiranha_redactor.model import load_model, resolve_device
 
 __all__ = ["PIIRedactor", "DetectedEntity"]
 __version__ = "0.1.0"
+
+logger = logging.getLogger(__name__)
+
+
+def _log_entities(entities: list[DetectedEntity]) -> None:
+    if not entities or not logger.isEnabledFor(logging.DEBUG):
+        return
+
+    table = tabulate(
+        [[e.word, e.label, f"{e.score:.4f}", e.start, e.end] for e in entities],
+        headers=["Word", "Label", "Score", "Start", "End"],
+        tablefmt="simple",
+    )
+    logger.debug("Detected %d PII entities:\n%s", len(entities), table)
 
 
 class PIIRedactor:
@@ -24,7 +42,7 @@ class PIIRedactor:
 
     Args:
         device: "cuda", "cpu", or None (auto-detect).
-        threshold: Minimum confidence score (0.0–1.0). Default 0.5.
+        threshold: Minimum confidence score (0.0-1.0). Default 0.5.
     """
 
     def __init__(
@@ -47,13 +65,16 @@ class PIIRedactor:
 
         active_threshold = threshold if threshold is not None else self._default_threshold
 
-        return detect(
+        entities = detect(
             text=text,
             tokenizer=self._tokenizer,
             model=self._model,
             device=self._device,
             threshold=active_threshold,
         )
+
+        _log_entities(entities)
+        return entities
 
     def redact(
         self,
@@ -74,6 +95,7 @@ class PIIRedactor:
             threshold=active_threshold,
         )
 
+        _log_entities(entities)
         return redact(text=text, entities=entities)
 
     def redact_with_details(
@@ -95,6 +117,7 @@ class PIIRedactor:
             threshold=active_threshold,
         )
 
+        _log_entities(entities)
         redacted_text = redact(text=text, entities=entities)
 
         return {

@@ -27,6 +27,7 @@ classifiers = [
 
 # torch is not pinned — users may need a specific CUDA version
 dependencies = [
+    "tabulate>=0.9.0",
     "transformers>=4.44.0",
 ]
 
